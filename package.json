@@ -1,0 +1,65 @@
+{
+  "name": "cn2-watchman",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "vue-tsc --noEmit && vite build && electron-builder",
+    "lint": "vue-cli-service lint",
+    "preview": "vite preview",
+    "start": "concurrently -k \"vite\" \"wait-on tcp:3000 && cross-env NODE_ENV=development electron .\"",
+    "prepare": "npx only-allow npm && husky install"
+  },
+  "main": "electron/main.js",
+  "dependencies": {
+    "vue": "^3.2.25"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.9.1",
+    "@typescript-eslint/parser": "^5.9.1",
+    "@vitejs/plugin-vue": "^2.0.1",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/eslint-config-standard": "^5.1.2",
+    "concurrently": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "electron": "^16.0.7",
+    "electron-builder": "^22.14.5",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^8.3.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.7",
+    "only-allow": "^1.0.0",
+    "typescript": "^4.5.4",
+    "vite": "^2.7.12",
+    "vue-tsc": "^0.29.8",
+    "wait-on": "^6.0.0"
+  },
+  "build": {
+    "appId": "org.misaka.cn2-watchman",
+    "productName": "CN2 Watchman",
+    "copyright": "Copyright © 2021 Misaka17535",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist_electron"
+    }
+  },
+  "lint-staged": {
+    "!(*test).{js,jsx,ts,tsx}": [
+      "eslint"
+    ]
+  }
+}
