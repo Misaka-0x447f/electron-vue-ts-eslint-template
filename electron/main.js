@@ -2,17 +2,18 @@
 
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
+require('./src')
 
 function createWindow () {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'browser-preload.js')
     }
   })
 
-  process.env.NODE_ENV === 'development' ? mainWindow.loadURL('http://localhost:3000') : mainWindow.loadFile('dist/index.html')
+  process.env.NODE_ENV === 'development' ? mainWindow.loadURL('http://localhost:3000') : mainWindow.loadFile(path.join(__dirname, 'dist/index.html'))
 
   // mainWindow.webContents.openDevTools()
 }
