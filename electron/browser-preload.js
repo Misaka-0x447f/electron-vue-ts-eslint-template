@@ -1,3 +1,6 @@
+const { ipcRenderer } = require('electron')
+window.ipcRenderer = ipcRenderer
+
 // env: Chrome Extension
 window.addEventListener('DOMContentLoaded', () => {
   const replaceText = (selector, text) => {

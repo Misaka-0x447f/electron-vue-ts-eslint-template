@@ -34,6 +34,8 @@ const buildAndWatch = () => new Promise(resolve => {
         await Promise.all(optionsObj.output.map(bundle.write))
       }
 
+      fsj.copy('./electron/browser-preload.js', path.join(tmpDir, 'browser-preload.js'))
+
       resolve()
 
       // You can also pass this directly to "rollup.watch"
@@ -46,5 +48,5 @@ const buildAndWatch = () => new Promise(resolve => {
   fsj.list(os.tmpdir()).filter(el => el.startsWith(tmpDirPrefix) && fsj.exists(el) === 'dir').map(fsj.remove)
   fsj.dir(tmpDir)
   await buildAndWatch()
-  await exec(`concurrently -k "vite" "wait-on tcp:3000 && cross-env NODE_ENV=development electronmon ${artifact}"`)
+  await exec(`concurrently -n "browser,node" -k "vite" "wait-on tcp:3000 && cross-env NODE_ENV=development electronmon ${artifact}"`)
 })()
