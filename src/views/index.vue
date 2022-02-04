@@ -13,8 +13,8 @@
 
 <script lang="ts">
 import HelloWorld from '../components/HelloWorld.vue'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
-import events from '../../util/events'
+import { onMounted, ref } from 'vue'
+import ipc from '../ipc'
 
 export default {
   name: 'IndexPage',
@@ -23,11 +23,8 @@ export default {
   },
   setup () {
     const messages = ref<string>('')
-    onMounted(() => {
-      events.browserReady.dispatch()
-      onBeforeUnmount(events.requestComplete.sub(payload => {
-        messages.value = payload
-      }))
+    onMounted(async () => {
+      messages.value = await ipc.fetchHomePage.request()
     })
     return {
       messages
